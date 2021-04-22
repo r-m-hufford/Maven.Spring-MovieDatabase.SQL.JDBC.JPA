@@ -8,3 +8,44 @@
 
 Class.forName("com.mysql.jdbc.Driver")
 Connection con = DriverManager.getConnection(url);
+
+For Spring 4.xx or higher we have to make a bit change in the getCircleCount() as follows
+   public int getCircleCount() {
+        String sql="select count(*) from circle";
+        jdbcTemplate.setDataSource(getDataSource());
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+
+    }
+
+
+JDBCTemplate has code for the pre and post query execution
+import in a field
+----------
+create a setter
+
+in setters and getters....
+@Autowired
+public void setDataSource(DataSource dataSource) {
+    this.jdbcTemplate = jdbcTemplate(dataSource)
+}
+----------
+
+String sql = "SOME sql STATMENT"
+jdbcTemplate.queryForInt(sql)
+.queryForList
+.queryForMap
+
+-----------
+
+Strin sql  some sSQL
+jdbcTemplate.queryForObject(sql, new Object[] {multiple items}, String.class <-- return type)
+
+-----------
+return an object itself
+1. provide the query
+2. write the code for the mapping
+    String sql = some query SELECT * FROM table WHERE ID - ?
+    jdbcTemp.Query for object(sql, new Object[] {}, RowMapper<T>)
+
+------------
+
